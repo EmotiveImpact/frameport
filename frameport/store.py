@@ -6,7 +6,9 @@ import uuid
 from pathlib import Path
 from typing import Any
 
-class Store:
+from .platform_store import PlatformStore
+
+class Store(PlatformStore):
     """Every update is one SQLite transaction; no in-memory source of truth."""
     def __init__(self, root: Path):
         root.mkdir(parents=True, exist_ok=True)
@@ -14,6 +16,8 @@ class Store:
         with self.connect() as db:
             db.execute("PRAGMA journal_mode=WAL")
             db.execute("CREATE TABLE IF NOT EXISTS jobs (id TEXT PRIMARY KEY, created REAL, updated REAL, status TEXT, record TEXT)")
+
+        self.migrate_platform()
 
     def connect(self):
         db = sqlite3.connect(self.path, timeout=15)
@@ -66,3 +70,5 @@ class Store:
     def delete(self, ident):
         with self.connect() as db:
             db.execute("DELETE FROM jobs WHERE id=?", (ident,))
+            db.execute("DELETE FROM requests WHERE job_id=?", (ident,))
+            db.execute("DELETE FROM revisions WHERE job_id=?", (ident,))

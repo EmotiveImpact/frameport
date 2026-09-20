@@ -18,6 +18,7 @@ jobs:
       - run: npm ci --ignore-scripts
       - run: npm run build && npm run typecheck
       - run: pytest -q
+      - run: node --test tests/router.test.mjs
       - run: python -m playwright install --with-deps chromium
       - name: Monochrome studio and original WebGL shader
         env:
@@ -51,11 +52,18 @@ jobs:
         env:
           FRAMEPORT_UNSANDBOXED_TEST_BROWSER: '1'
         run: python -m scripts.check_presentation --job fixture-result.json --data .frameport-ci --output artifacts/presentation
+      - name: Routed gateway, durable queue and real subprocess conversion
+        env:
+          FRAMEPORT_UNSANDBOXED_TEST_BROWSER: '1'
+        run: python -u -m scripts.check_platform --output artifacts/platform
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: fixture-evidence
           path: |
+            artifacts/platform/*.json
+            artifacts/platform/*.png
+            artifacts/platform/*-platform.zip
             artifacts/presentation/*.json
             artifacts/presentation/*.png
             artifacts/design/*.json
@@ -72,3 +80,35 @@ jobs:
             artifacts/acceptance/edited-*.zip
             package-lock.json
             .frameport-ci/jobs/*/react/package-lock.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: compiled-studio
+          path: web/dist/*.js
+  sync-studio:
+    needs: check
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/download-artifact@v4
+        with:
+          name: compiled-studio
+          path: web/dist
+      - name: Commit only verified compiled assets
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add web/dist/*.js
+          if git diff --cached --quiet; then exit 0; fi
+          git fetch origin main
+          if [ "$(git rev-parse origin/main)" != "${{ github.sha }}" ]; then
+            echo 'Main changed while tests ran. Not overwriting newer work.'
+            exit 1
+          fi
+          git commit -m 'build: synchronise verified compiled studio [skip ci]'
+          git push origin HEAD:main

@@ -18,11 +18,13 @@ def main():
     document=re.sub(r'<link[^>]+rel="icon"[^>]*>','',document)
     for stylesheet in ('style.css', 'presentation.css'):
         document=document.replace(f'<link rel="stylesheet" href="/static/{stylesheet}">', '<style>'+(ROOT/'web'/stylesheet).read_text()+'</style>')
+    document=document.replace('<link rel="stylesheet" href="/static/platform.css">', '<style>'+(ROOT/'web/platform.css').read_text()+'</style>')
     setup='<script>window.__FRAMEPORT_PREVIEW__='+json.dumps(payload,ensure_ascii=True).replace('</','<\\/')+';</script>'
     code=(ROOT/'web/dist/app.js').read_text().replace('</script','<\\/script')
-    # The portable preview resolves our sole local shader module without a server.
-    shader=base64.b64encode((ROOT/'web/dist/eclipse.js').read_bytes()).decode()
-    code=code.replace("from './eclipse.js'", "from 'data:text/javascript;base64,"+shader+"'")
+    # All local modules are included; this preview still cannot run jobs.
+    for module in ('eclipse.js', 'router.js', 'platform-views.js'):
+        encoded=base64.b64encode((ROOT/'web/dist'/module).read_bytes()).decode()
+        code=code.replace(f"from './{module}'", "from 'data:text/javascript;base64,"+encoded+"'")
     document=document.replace('<script type="module" src="/static/dist/app.js"></script>',setup+'<script type="module">'+code+'</script>')
     Path(a.output).write_text(document)
     print(a.output,Path(a.output).stat().st_size)

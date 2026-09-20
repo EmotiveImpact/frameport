@@ -37,6 +37,7 @@ class TextPatch(BaseModel):
     text: str = Field(max_length=5000)
 
 class EditRequest(BaseModel):
+    expected_revision: int | None = Field(default=None, ge=0)
     model_config = ConfigDict(extra="forbid")
     patches: list[TextPatch] = Field(min_length=1, max_length=200)
 
@@ -46,3 +47,11 @@ class Issue(BaseModel):
     message: str
     page: str = ""
     count: int = 1
+
+class SessionRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    key: str = Field(min_length=1, max_length=256)
+
+class RenameRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    name: str = Field(min_length=1, max_length=80)

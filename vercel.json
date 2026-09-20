@@ -1,0 +1,10 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "npm ci --ignore-scripts && npm run build",
+  "functions": {
+    "vercel_app.py": {
+      "maxDuration": 60,
+      "excludeFiles": "{tests/**,fixtures/**,artifacts/**,.frameport*/**,node_modules/**}"
+    }
+  }
+}
