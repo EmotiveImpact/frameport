@@ -91,10 +91,10 @@ h1, h2, h3,
   .brand { font-size: 16px; }
   .main-nav button { font-size: 12px; }
   .welcome { min-height: 790px; }
-  .welcome h1 { font-size: 52px; letter-spacing: -2.4px; }
+  .welcome h1 { font-size: clamp(34px, 10.75vw, 44px); letter-spacing: -.05em; }
   .welcome p { font-size: 14px; line-height: 1.8; max-width: 345px; }
   .hero-visual { height: 350px; width: 152%; right: -40%; top: 390px; }
 }
 @media (max-width:370px) {
-  .welcome h1 { font-size: 42px; }
+  .welcome h1 { font-size: 34px; }
 }

@@ -7,6 +7,7 @@ from __future__ import annotations
 import argparse
 import asyncio
 import json
+import re
 from pathlib import Path
 import shutil
 from PIL import Image
@@ -26,8 +27,12 @@ async def run(job_file: Path, data: Path, output: Path):
             raise AssertionError(name)
 
     async def weight(page, selector, minimum, name):
-        actual = await page.locator(selector).first.evaluate('e => Number(getComputedStyle(e).fontWeight)')
-        check(name, actual >= minimum)
+        locator = page.locator(selector).first
+        # Source selection can replace the DOM after its fetch. Assert the
+        # settled CSS on a re-resolving locator, not a transient detached node.
+        allowed = re.compile('^(?:' + '|'.join(str(w) for w in range(minimum, 1001, 100)) + ')$')
+        await expect(locator).to_have_css('font-weight', allowed, timeout=10000)
+        check(name, True)
 
     try:
         fixture, source = load_fixture(job_file, data)
@@ -54,6 +59,8 @@ async def run(job_file: Path, data: Path, output: Path):
                         await weight(page, '#start-converting', 600, f'{width}px stronger primary action')
                         check(f'{width}px pure-black canvas', await page.evaluate("getComputedStyle(document.documentElement).backgroundColor === 'rgb(0, 0, 0)'"))
                         check(f'{width}px no page overflow', await page.evaluate('document.documentElement.scrollWidth <= innerWidth + 1'))
+                        if width <= 390:
+                            check(f'{width}px heading retains three readable lines', await page.locator('#hero-title').evaluate('e => e.getBoundingClientRect().height / parseFloat(getComputedStyle(e).lineHeight) < 3.2'))
                         check(f'{width}px heading is not clipped', await page.locator('.welcome').evaluate("e => {const h=e.querySelector('#hero-title').getBoundingClientRect(), r=e.getBoundingClientRect(); return e.scrollLeft===0 && h.left>=r.left && h.right<=r.right;}"))
                         if width == 1440:
                             check('Artwork is large and intentionally cropped at right', await page.evaluate("() => {const a=document.querySelector('.hero-visual').getBoundingClientRect(),h=document.querySelector('.welcome').getBoundingClientRect();return a.height>=700 && a.right>h.right && h.right<=innerWidth+1;}"))
