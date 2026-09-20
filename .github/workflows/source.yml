@@ -1,0 +1,23 @@
+name: Source snapshot
+on:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  source:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - name: Archive tracked source only
+        run: |
+          mkdir -p artifacts
+          git archive --format=zip HEAD > artifacts/frameport-source.zip
+          git rev-parse HEAD > artifacts/COMMIT.txt
+          sha256sum artifacts/frameport-source.zip > artifacts/SHA256.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: frameport-source
+          path: artifacts/
+          retention-days: 30
