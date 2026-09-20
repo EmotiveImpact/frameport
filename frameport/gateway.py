@@ -6,6 +6,7 @@ jobs that would disappear on the next serverless invocation.
 """
 from __future__ import annotations
 from contextlib import asynccontextmanager
+from http.cookiejar import CookieJar, DefaultCookiePolicy
 import os
 from urllib.parse import urlsplit
 import httpx
@@ -19,6 +20,15 @@ from .web_routes import APP_CSP, install_documents
 MAX_BODY = 1_200_000
 HOP_HEADERS = {'connection', 'keep-alive', 'proxy-authenticate', 'proxy-authorization',
                'te', 'trailer', 'transfer-encoding', 'upgrade', 'content-length', 'content-encoding'}
+
+
+class NoUpstreamCookies(DefaultCookiePolicy):
+    """Connection pooling is not a shared browser session."""
+    def set_ok(self, cookie, request):
+        return False
+
+    def return_ok(self, cookie, request):
+        return False
 
 
 def normalise_origin(raw: str, *, local_test: bool = False) -> str:
@@ -55,7 +65,7 @@ def create_gateway(origin: str | None = None, *, transport=None, local_test=Fals
     upstream = normalise_origin(origin if origin is not None else os.getenv('FRAMEPORT_WORKER_ORIGIN', ''), local_test=local_test)
     # Reused for this process; no lifespan-dependent initialisation on Vercel.
     client = httpx.AsyncClient(timeout=httpx.Timeout(30, connect=8), follow_redirects=False,
-                               transport=transport, headers={'Accept-Encoding': 'identity'})
+                               transport=transport, cookies=CookieJar(policy=NoUpstreamCookies()), headers={'Accept-Encoding': 'identity'})
     @asynccontextmanager
     async def lifespan(app):
         yield
@@ -94,7 +104,7 @@ def create_gateway(origin: str | None = None, *, transport=None, local_test=Fals
         if not upstream:
             return base | {'message': 'Connect the persistent conversion service to activate your workspace.'}
         try:
-            result = await client.get(upstream + '/api/health')
+            result = await client.send(httpx.Request('GET', upstream + '/api/health', headers={'Accept-Encoding': 'identity'}))
             result.raise_for_status()
             payload = result.json()
             if not isinstance(payload, dict):
@@ -130,7 +140,10 @@ def create_gateway(origin: str | None = None, *, transport=None, local_test=Fals
         if request.url.query:
             url += '?' + request.url.query
         try:
-            req = client.build_request(request.method, url, headers=headers, content=await request.body())
+            # Explicit requests cannot inherit another visitor's session from the
+            # pooled client. The rejecting cookie policy is a second boundary.
+            headers['accept-encoding'] = 'identity'
+            req = httpx.Request(request.method, url, headers=headers, content=await request.body())
             result = await client.send(req, stream=True)
         except httpx.HTTPError:
             return unavailable('worker-offline')
