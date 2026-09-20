@@ -1,25 +1,25 @@
-# Frameport delivery status
+# Frameport status
 
-**20 September 2026 · 0.1.0 developer release · working name Frameport**
+**20 September 2026 | 0.1.0 developer release | EmotiveImpact/frameport**
 
-## Built
+## Repository and verified code
 
-A real local converter and studio: published-URL capture code, bounded crawling, HTML and React/TypeScript generation, local assets, 5-width HTML evidence, source browsing, content editing/regeneration, revision-scoped access, ZIP/report downloads, cancellation/retry, persistence and JSON project-manifest import. Includes the original Forma fixture, optional bridge adapter source, startup scripts, a Docker development configuration, CI and engineering documentation.
+The complete source has been pushed to `main`. Tested code commit: `bf340ab3f8a8ee27c45fd7ec9ac58e385c844b1c`. [GitHub Actions run 35504470191](https://github.com/EmotiveImpact/frameport/actions/runs/35504470191) completed successfully. Any subsequent documentation-only commit does not change this tested code tree.
 
-## Verified in this environment
+The earlier statement that no remote repository was changed is obsolete. The owner created the repository, and the source and subsequent fixes were pushed on 20 September 2026. No hosted service was deployed.
 
-65 unit/API/security cases; 10 full-height HTML comparisons over the original 2-page fixture; 17 render/disclosure checks; 14 API/edit/regeneration checks; 20 responsive preview UI checks; strict studio TypeScript; bridge adapter TypeScript; syntactic validation of 15 generated React/TypeScript/JavaScript files.
+## Working and demonstrated
 
-Browser navigation was blocked by administrator policy. Fixture and generated pages were rendered through a disclosed, test-only local-document adapter, not a live Framer site. Real local HTTP asset fetching, API requests, compilation, archive creation and content regeneration were exercised independently. The policies were not altered.
+The original two-page Forma fixture passes real HTTP capture, HTML generation, clean React dependency installation and production build, independent five-width visual comparisons, authenticated studio access, sandboxed preview, mobile disclosures, source viewing, content edits, revision invalidation and actual browser downloads of both formats.
 
-## Unverified external gates
+After rebuilding, both the editor and source viewer now display the saved revision rather than cached text. This has its own browser regression check. Generated Vite was updated to 6.4.3; the observed dependency audit reported no vulnerabilities.
 
-Actual Framer-published-site conversion, normal browser-to-worker/iframe integration, a fresh generated-React dependency installation and production build, the bridge inside Framer, Docker operation and GitHub Actions. No hosted conversion service is deployed. No automatic repair engine, complete Framer canvas compiler or multi-tenant SaaS is claimed.
+Measured results: 75 unit/API cases, 10 HTML comparisons, 17 HTML render/disclosure checks, 10 built-React comparisons and 44 browser acceptance checks passed. No uncaught browser errors occurred in that acceptance run. See `docs/TEST-REPORT.md` and `docs/evidence/ci-summary.json`.
 
-## GitHub
+## Still outside verified coverage
 
-The connected account is EmotiveImpact. The available connector does not expose repository creation. `EmotiveImpact/frameport` was not accessible through the connection when checked. **No remote repository was created or changed.** Source and local Git history are packaged; initialise a private repository and grant the connection access before publishing there.
+A genuine Framer-published site, the plugin inside Framer, Docker operation, production browser/tenant isolation, advanced Framer motion and breakpoint-specific DOM reconstruction remain unverified or unfinished. CI's authored-fixture browser is not a production sandbox assurance. Ordinary per-conversion reports still do not automatically verify React builds.
 
-## Next action
+## Next acceptance target
 
-Run an authorised live Framer marketing site through the normal sandboxed worker, build the generated React from a clean dependency install, and compare React and HTML separately. Run CI after uploading the repository. Use the discrepancies to expand regression fixtures rather than weakening the evidence checks.
+Run an authorised published Framer URL through the normal sandboxed worker. Compare its independently built React and HTML outputs and record unsupported features as reproducible fixtures. The current green sample workflow is the foundation for that test, not a claim that every Framer site converts faithfully.

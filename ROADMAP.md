@@ -1,25 +1,21 @@
 # Frameport roadmap
 
-## Implemented developer path
+## Completed foundation
 
-The local studio, persistent queue, authored-site capture/compiler flow, escaped React/HTML source, responsive CSS preservation, local asset collection, HTML visual evidence, limited disclosures, editable text/regeneration, revision invalidation, archives, source browsing and manifest import are implemented. The source bridge adapter is present but not editor-verified. See STATUS.md for test boundaries.
+The local studio, persistent queue, escaped HTML/React generator, local assets, HTML visual evidence, source browser, text editing/regeneration, revision invalidation and archives are implemented. The original Forma fixture now passes actual HTTP capture, a clean React production build, independent HTML/React comparisons and the full authenticated browser journey. See `STATUS.md` for the verified commit and run.
 
-## Gate 1: genuine live-site acceptance
+## Next: genuine live-site acceptance
 
-Use authorised Framer-published sites with a recorded expected feature set. Run normal sandboxed browser capture, not the offline harness. Install the exported React dependencies, produce and commit a real lockfile, run strict type checks/build, render the React output and compare it separately from HTML. Exercise the studio against its actual HTTP API, including sandboxed iframes, signed assets, authentication and downloads in supported browsers. Fix every failing feature in a small reproducible regression fixture. No blanket conversion-success claim before this.
+Use an authorised Framer-published marketing site with a recorded expected feature set. Capture it with the normal sandboxed worker, build its React export and compare that output separately from HTML. Exercise links, mobile navigation, forms and visible interactions. Turn each discrepancy into a small regression fixture. The existing sample's successful CI is not a substitute for this gate.
 
-## Gate 2: broader conversion coverage
+## Broader conversion coverage
 
-Handle breakpoint-specific DOM variants rather than relying solely on desktop structure and original CSS. Add tested adapters for tabs, carousels, hover menus, overlays, sticky/scroll effects and selected animation patterns. Improve cross-page component reuse, semantic naming, CSS simplification and asset handling for image sets, media, pseudo-elements and font licensing. Surface every unsupported construct precisely.
+Reconstruct breakpoint-specific DOM variants. Add tested adapters for tabs, carousels, overlays and selected scroll/motion patterns. Improve cross-page component reuse, semantic naming, CSS simplification, responsive images, media and asset provenance. Keep unsupported constructs visible rather than silently flattening them.
 
-## Gate 3: project-native context
+## Project-native context
 
-Run the bridge inside genuine Framer projects; audit SDK/permission coverage. Extend read-only context collection and mapping into the intermediate model. Add opt-in CMS schema/content migration and bindings. A standalone published plugin, full canvas compilation and original source recovery are not already implemented.
+Test the read-only bridge inside genuine Framer projects. Extend its metadata mapping and add opt-in CMS schema/content migration with actual bindings. The current JSON importer does not compile the original Framer canvas or automatically recover its reusable abstractions.
 
-## Gate 4: controlled repair
+## Controlled repair and hosted product
 
-Create deterministic fix rules from failed regression cases. Add optional AI-assisted suggestions behind bounded tests and provenance. Keep extracted data separate from inference. An AI repair loop is not part of the current executable release.
-
-## Gate 5: hosted product
-
-Add proper accounts/workspaces, durable queue and object storage, isolated browser workers with enforced egress, quota/billing/abuse systems, automated retention, deployment observability and a security review. Only then open arbitrary public conversion. A polished studio is not itself the public-worker infrastructure.
+Build deterministic repair rules from observed failures before adding optional, bounded AI suggestions. For public hosting, add isolated browser workers, enforced egress, tenant identity and storage isolation, durable scheduling, billing/quotas, abuse controls, monitored retention and external review. Docker and public operations are not verified merely because the studio works.

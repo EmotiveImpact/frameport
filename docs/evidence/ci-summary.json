@@ -1,0 +1,42 @@
+{
+  "date": "2026-09-20",
+  "testedCommit": "bf340ab3f8a8ee27c45fd7ec9ac58e385c844b1c",
+  "testedTree": "ae43e866c46a2def87102650e325b321803ce2be",
+  "repository": "EmotiveImpact/frameport",
+  "workflowRun": 35504470191,
+  "workflowJob": 106061831360,
+  "workflowConclusion": "success",
+  "artifactId": 10603592232,
+  "artifactSha256": "766440990244d14dec5590db8ceb3db541aaa64ebff8a4dcd525ab68d1a2c2ad",
+  "referenceJob": "85d49c5f787e4abcad816f3b687ce156",
+  "scope": "Original two-page Forma fixture. Real HTTP navigation; independently installed and built React; authenticated browser editing and downloads. Not a Framer-published-site benchmark.",
+  "unitCases": 75,
+  "htmlComparisons": 10,
+  "htmlChecks": 17,
+  "reactComparisons": 10,
+  "browserAcceptanceChecks": 44,
+  "browserAcceptancePassed": true,
+  "uncaughtBrowserErrors": [],
+  "auditVulnerabilities": {
+    "info": 0,
+    "low": 0,
+    "moderate": 0,
+    "high": 0,
+    "critical": 0,
+    "total": 0
+  },
+  "fixture": {
+    "pages": 2,
+    "components": 9,
+    "textFields": 74,
+    "assets": 1
+  },
+  "unverified": [
+    "Genuinely Framer-published source",
+    "Framer editor plugin integration",
+    "Docker operation",
+    "Production browser and tenant isolation",
+    "Arbitrary advanced Framer interactions"
+  ],
+  "perConversionReactBuild": "Not automatically run by the production pipeline; CI builds and measures the specific fixture separately."
+}

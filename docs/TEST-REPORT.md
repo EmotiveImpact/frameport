@@ -1,36 +1,41 @@
 # Verification report
 
-**Date:** 20 September 2026. **Release:** 0.1.0. **Result:** functional developer release with explicitly unverified external integrations.
+**20 September 2026 | Current verified code: bf340ab3f8a8ee27c45fd7ec9ac58e385c844b1c**
 
-## Measured results
+## Actual GitHub run
 
-| Check | Observed result | Scope |
-|---|---|---|
-| Unit/API/security suite | 65 passed | URL/IP policies, mixed DNS answers, redirect checks, local asset fetch, SVG sanitisation, escaping, numeric JSX attributes, storage, path containment, host/auth/CSRF/body/queue limits, cancellation and unfinished-export protection |
-| Original fixture conversion | 2 pages, 9 React components, 1 local SVG asset | Authored Forma fixture; real extraction, compiler, local asset fetching and ZIP packaging |
-| HTML visual comparison | 10 of 10 passed | Two pages at 390, 540, 768, 1024 and 1440px; actual document-height screenshots, not just the first viewport |
-| Render/disclosure checks | 17 passed | 10 image/render checks, 6 native-details checks and 1 visible mobile aria-controls disclosure |
-| Content editing and API lifecycle | 14 passed | Real API calls, completed ZIP access, signed preview access, revision invalidation, regenerated React JSON, escaped HTML, new ZIPs and bad field rejection |
-| Intentional edit detection | 5 comparisons flagged differences | A changed home-page heading deliberately caused visual review, while the unchanged page remained a reference |
-| Studio UI | 20 passed; 0 JavaScript errors | Overview, conversion preview, source, content and report views at four viewport sizes |
-| Studio TypeScript | Passed | Strict compile of the actual studio source |
-| Bridge adapter TypeScript | Passed | Read-only adapter interface and implementation, not the Framer SDK/editor integration |
-| Generated source syntax | 15 files checked; 0 syntactic errors | React/TypeScript/JavaScript parsing/transpilation, **not** dependency resolution or a production build |
+[Run 35504470191](https://github.com/EmotiveImpact/frameport/actions/runs/35504470191), job `106061831360`, completed successfully. Its downloaded `fixture-evidence` archive, artefact `10603592232`, was verified against SHA-256 `766440990244d14dec5590db8ceb3db541aaa64ebff8a4dcd525ab68d1a2c2ad`.
 
-The matched-pixel figure in the fixture report is measured from actual rendered images. It is not a conversion-success percentage for arbitrary websites. PNG dimensions are checked against the declared capture dimensions. The report files preserve each comparison, height, changed-pixel count, tolerance, issue and execution mode.
+| Check | Observed result |
+|---|---|
+| Unit/API/security-contract suite | 75 passed |
+| Studio build and strict TypeScript | Passed |
+| Real HTTP Forma capture and HTML comparison | 10 of 10 passed |
+| HTML render/disclosure checks | 17 passed |
+| Generated React dependency installation, strict check and Vite production build | Passed |
+| Built React versus original source, five widths on two pages | 10 of 10 passed |
+| Authenticated studio and real-browser acceptance | 44 passed |
+| Uncaught browser errors in acceptance | 0 |
+| Generated React dependency audit | 0 reported vulnerabilities |
 
-## Environment limitations and substitutions
+The source fixture produced two pages, nine editable React components, 74 non-empty text fields and one local SVG asset. Both initial HTML and built-React comparisons recorded zero changed pixels under the stated channel tolerance. This is evidence for this authored fixture, not a percentage guarantee for arbitrary websites.
 
-Chromium navigation is blocked in the authoring environment by administrator URL policy. That policy was left in place. A test-only adapter rendered existing authorised local fixture files and generated output with `set_content`, inlining their local resources. It restored source URL/style context for the extractor and labelled every resulting report `offline-document-harness`. No blocked public website was accessed through this mechanism.
+## Browser journey actually exercised
 
-Therefore these results **do not verify normal browser navigation, live Framer hydration, Framer animation equivalence, real iframe resource loading under response CSP, or browser downloads**. API preview/ZIP responses were exercised independently with real application requests. The portable UI was tested with its actual embedded fixture data, not a live HTTP backend connection. It is not presented as a hosted converter.
+The runner uses actual HTTP navigation and rejects the earlier offline-document references. It opens installed React production output, checks local images and mobile disclosures, authenticates against a real Uvicorn/FastAPI worker, opens the sandboxed iframe and confirms it cannot access the parent document or service-worker API.
 
-The network in this environment also prevented fresh npm dependency installation. Generated React syntax was checked with an installed TypeScript compiler, but **npm install, full module/type resolution, Vite production build and actual modern React rendering remain unverified**. No lockfile or successful build output was invented. The Docker image and GitHub Actions workflow were written, not executed. The Framer adapter was checked against its local interface, not an installed SDK or genuine editor session.
+It checks the response CSP, reads generated source, edits a field through the studio, waits for the real worker to regenerate it, confirms the editor and source viewer refresh, checks changed visual evidence and revoked old tickets, then downloads and opens both HTML and React ZIPs to verify the saved content. All 44 assertions passed. The intentionally changed heading is expected to differ from the original source; that does not represent a broken regeneration.
 
-## Evidence files
+## Corrections made during verification
 
-`evidence/fixture-report.json`, `evidence/editing-checks.json`, `evidence/react-syntax.json` and `evidence/ui-checks.json` contain actual results. The supplied visual-evidence ZIP contains the matching source/export/difference PNGs and UI screenshots. The two sample export ZIPs contain the real generated code and conversion report.
+Numeric textarea dimensions fixed the first strict React build failure. The source-view assertion now waits for the asynchronous fetch. Playwright's test-only service-worker injection was removed from the trusted studio test context because it accessed an unavailable API in opaque sandboxed frames; production capture blocking, iframe isolation and CSP remain intact and are explicitly tested.
 
-## Reproduction
+Inspection of an initially green run's screenshot revealed stale text in the editor after rebuilding. The client now clears its old content/source caches and reloads the finished revision. Two additional browser assertions verify that correction. Vite 6.4.3, a genuine root lockfile and a generated-dependency audit were also added.
 
-Run the README's development commands. `scripts/check_fixture.py` defaults to normal browser navigation; use `--offline` only for an explicit restricted-environment test. Its authored fixture is not a secretly substituted Framer website. CI is configured to attempt a normal local-fixture capture and fresh React production build when the repository is uploaded. Until that actually runs, CI is **unverified**, not green.
+## Limits and historical evidence
+
+The live source is the original Forma fixture, **not a Framer-published site**. CI intentionally runs its trusted authored fixtures without the Chromium sandbox; it does not establish production isolation or public-service readiness. The editor plugin, Docker and arbitrary Framer interactions remain outside this evidence.
+
+The production pipeline's per-conversion report verifies HTML only. The additional React production build and comparisons are performed separately by CI for this specific output. The report is not changed to claim automatic React verification for every job.
+
+Earlier `fixture-report.json`, `editing-checks.json`, `react-syntax.json`, `ui-checks.json` and `unit-tests.txt` in `docs/evidence` record the initial, explicitly labelled offline delivery. They are historical, not the latest CI result. `ci-summary.json` links the current measured result to its commit, run and archive digest. The archive retains full current reports, comparisons, source model, genuine lockfiles, screenshots and output ZIPs; private workspace keys and databases are excluded.

@@ -1,20 +1,24 @@
 # Frameport
 ### Your design. Your code. Your rules.
 
-An evidence-led conversion studio that reconstructs published websites as editable React + TypeScript and standalone HTML/CSS. Built for a single trusted workspace. **Version 0.1.0 is a developer release, not a universally verified Framer converter or public SaaS.**
+A local conversion studio that reconstructs published websites as editable React + TypeScript and standalone HTML/CSS. The source is on `main` in `EmotiveImpact/frameport`. **Version 0.1.0 is a single-workspace developer release, not a universally verified Framer converter or hosted SaaS.**
 
-The actual code captures DOM and styles through Chromium, collects local assets, generates separate components and content files, compares rendered HTML at five widths, and packages real ZIP exports. The studio provides source browsing, image comparison, page/device switching, content editing, regeneration, progress, cancellation, retry and verification reports. There is no AI API key, screenshot-as-layout export, original script bundling or `dangerouslySetInnerHTML` wrapper.
+## Current verified build
+
+Code commit `bf340ab3f8a8ee27c45fd7ec9ac58e385c844b1c` passed [GitHub Actions run 35504470191](https://github.com/EmotiveImpact/frameport/actions/runs/35504470191) on 20 September 2026: 75 unit/API cases, 10 HTML comparisons, 10 built-React comparisons, 17 HTML render/disclosure checks and 44 browser acceptance checks. The generated dependency audit reported zero vulnerabilities at that run. See [the test report](docs/TEST-REPORT.md) for scope and provenance.
+
+These results use our original two-page Forma fixture through real HTTP navigation. **They do not establish compatibility with a genuinely Framer-published site.** The earlier offline evidence remains separately labelled in `docs/evidence`.
 
 ## Start locally
 
-Requires Python 3.11+ and internet access for the initial dependency/browser installation and published-site capture. The compiled studio is already included, so Node is not required to start the converter.
+Requires Python 3.11+ and internet access for dependency/browser installation. The compiled studio is included, so Node is not required to start the converter.
 
 ```bash
 cd frameport
 bash scripts/start.sh
 ```
 
-Then open **http://127.0.0.1:8040**. On Windows, run `powershell -File scripts/start.ps1` from the project folder. A manual installation is:
+Open **http://127.0.0.1:8040**. On Windows, run `powershell -File scripts/start.ps1`. Manual setup:
 
 ```bash
 python3 -m venv .venv
@@ -24,77 +28,54 @@ python -m playwright install chromium
 python -m frameport.cli
 ```
 
-On Linux, Playwright may require system dependencies: `python -m playwright install --with-deps chromium`. Chromium must be able to initialise its sandbox for untrusted captures. Do not solve sandbox errors by disabling it for public sites. The `FRAMEPORT_UNSANDBOXED_TEST_BROWSER` switch is exclusively for trusted authored test fixtures.
+Linux may additionally need `python -m playwright install --with-deps chromium`. Chromium's sandbox must work for untrusted captures. Do not disable it to capture public sites. The unsandboxed test switch is exclusively for controlled, authored fixtures.
 
-First try **Convert the sample site**. This uses our original two-page Forma fixture, not a hidden live Framer benchmark. To convert an authorised published site, paste its address, select the page limit, confirm permission and submit. Review the report before publishing either output.
+Select **Convert the sample site** for the complete local workflow. For your own published site, paste its URL, confirm permission, choose page coverage and submit. Inspect the result before publishing.
 
-## What you get
+## What you can do
 
-React projects contain `src/components/*.tsx`, `src/pages/*.tsx`, `src/content/site.json`, local styles/assets, page entries, a Vite configuration and a package manifest. Edit text, layout and code independently. In the exported React folder run `npm install`, `npm run dev`, then **`npm run build`** before deployment. React export assumes domain-root hosting.
+Watch conversion progress, switch pages and widths, compare source/export/difference images, interact with the sandboxed HTML preview, browse real generated source, edit extracted text and rebuild both exports. The editor refreshes to the saved revision. Cancellation, retries, persistence and ZIP/report downloads are implemented.
 
-HTML projects contain actual page markup, local styles/assets, and a small Frameport-owned disclosure/form-safety adapter. Serve the exported directory with `python -m http.server 8080`. There is no Framer runtime dependency in generated application code. CSS and asset warnings still require review.
+React exports contain components, pages, `src/content/site.json`, local styles/assets, route entries and Vite configuration. In that exported folder run `npm install`, `npm run dev`, then `npm run build` before deployment. Host the resulting site at the domain root. HTML exports can be served with `python -m http.server 8080`.
 
-Each ZIP includes `conversion-report.json` and `asset-manifest.json`. Project manifests, when supplied, are archived with optional CMS JSON. A bridge manifest adds reference context; it does not compile the original Framer canvas or automatically bind CMS records into pages.
+Every export includes its conversion report and asset manifest. Original source scripts and the Framer runtime are not shipped. A Frameport-owned adapter handles explicit disclosures and prevents form submission until you connect a backend. There is no screenshot-as-layout export, HTML-string React wrapper or required AI API key.
 
-The website UI itself is dependency-free TypeScript. The browser worker is Python/FastAPI/Playwright. The generated website target is React/TypeScript or HTML. This separation keeps the studio runnable without a JavaScript dependency install.
+The optional project-manifest importer archives project/CMS context. Its experimental read-only Framer plugin adapter is not editor-verified and does not compile the original canvas or automatically bind CMS routes.
 
-## Verification actually performed
+## Evidence boundaries
 
-See **[docs/TEST-REPORT.md](docs/TEST-REPORT.md)** and its machine-readable evidence. The delivered fixture output was produced through the real extraction/compiler/asset/packaging pipeline, but a clearly labelled offline-document test adapter replaced browser HTTP navigation because the build environment's administrator blocks it. Those restrictions were left intact.
+The production conversion pipeline verifies HTML, not every generated React build. CI separately installs, builds and measures the specific fixture's React output. A per-job `reactBuild: not-run` report remains accurate unless that particular output is separately tested; the fixture's green CI must not be applied to arbitrary exports.
 
-**Not verified here:** a live Framer-published website, a fresh dependency installation and production build of generated React, the plugin inside Framer, Docker startup, or end-to-end browser-to-live-API navigation. A syntactic React check is not a production build. The original source and exported HTML were genuinely rendered and compared; no percentage was invented.
+Capture currently uses desktop DOM with original responsive CSS. Breakpoint-specific DOM changes, arbitrary scripts, advanced motion, custom code, canvas/WebGL, embedded frames, authentication and backend migration remain outside demonstrated coverage. Original Framer abstractions are not recovered.
 
-The standalone `Frameport-Studio-Preview.html` supplied alongside this repository embeds the actual fixture evidence and source. It is an interactive, read-only preview, **not a live server**. Website conversion and saving edits require the worker above.
+Visual evidence covers 390, 540, 768, 1024 and 1440px, reduced motion and up to 6,000px down each page. Comparisons require equal dimensions and allow at most 2% changed pixels, using a 22-level RGB-channel tolerance. This is not a general conversion-success percentage.
 
-## Scope and boundaries
+## Configuration and safety
 
-Initial capture is desktop DOM with preserved responsive CSS. Dynamic DOM variants, arbitrary code overrides, advanced animation, WebGL/canvas, embedded frames, authentication, complex media, non-standard styles and unusual interactions are not automatically reconstructed. Forms are deliberately disabled until a backend is connected. Source scripts are never shipped. Original Framer component abstractions are not recovered.
+See `.env.example`; variables must be exported in the shell because the app does not automatically load `.env`. Workspace data and preview keys live in `.frameport/`. Do not commit or share this directory. Retention cleanup runs at startup. Remote binding requires a private access key of at least 24 characters and configured allowed hosts. One key opens one shared workspace, not separate tenants.
 
-The visual result measures only generated **HTML**, captured states, five widths (390, 540, 768, 1024 and 1440), reduced motion and at most the first 6,000 pixels of each page. A pixel passes the tolerance when every RGB channel differs by at most 22; a comparison allows at most 2% changed pixels and requires matching dimensions. This is not a global functional-equivalence score. Native details and visible aria-controls buttons receive limited interaction checks, not full animation/state comparisons.
+Capture defaults to three pages, maximum eight, with limits of 7,000 nodes/page, 80 levels, 300 assets, 12 MB/resource, 120 MB transfer, 1,200 fetches, 240 seconds/job and 12 pending jobs. Rebuilding revokes access to old exports and revision-scoped previews until completion. Signed previews expire after 30 minutes. The iframe has no same-origin privilege or form submission.
 
-Capture defaults to three pages, maximum eight, 7,000 nodes per page, 80 levels, 300 downloaded assets, 12 MB per response, 120 MB transfer budget, 1,200 fetches, a 240-second job limit and 12 pending jobs. Edits invalidate old reports, ZIP access and signed preview URLs until the new revision completes. Failed jobs never expose a completed download.
+Docker/Compose configuration is included but has not been executed in this delivery. Public hosting still requires isolated browser workers, enforced network egress, tenant identity/storage isolation, quotas, operational monitoring and security review. Read [SECURITY.md](docs/SECURITY.md). No hosted conversion service has been deployed.
 
-## Configuration and data
-
-Environment variables are described in `.env.example`. The application does **not** automatically load `.env`; export variables in your shell, or use Compose's environment support. Jobs, source models, copied assets, evidence, exports, SQLite records and the preview signing key live in `.frameport/` by default. Do not commit that directory. It may contain confidential project content. Retention cleanup runs at startup; old conversions can also be deleted through the API. There is no cloud telemetry.
-
-Default binding is loopback. Remote binding requires an access key of at least 24 characters. The studio keeps that key in memory, not local storage. All authenticated users of one worker share its workspace. This is not tenant isolation. Signed preview URLs expire after 30 minutes and are scoped to a conversion revision. Rendered HTML uses a restricted iframe/CSP with no same-origin privilege or form submission.
-
-## Docker development configuration
-
-A Dockerfile and Compose configuration are included but **not executed in this delivery environment**. Generate a private key, then:
+## Development
 
 ```bash
-export FRAMEPORT_API_KEY="$(python3 -c 'import secrets; print(secrets.token_urlsafe(32))')"
-docker compose up --build
-```
-
-Keep that key private and enter it in the studio. Ports are bound to local loopback. Host support for Chromium's sandbox/user namespaces must be checked. Do not run untrusted captures without the sandbox, and do not expose this image as a public service without the launch gates in `docs/SECURITY.md`. The browser worker requires a long-running host, not an ordinary static or short-lived serverless deployment.
-
-## Development and checks
-
-```bash
-npm install
+npm ci --ignore-scripts
 npm run build
 npm run typecheck
 pytest -q
 python -m scripts.check_fixture --data .frameport-check --output fixture-result.json
 ```
 
-Run the last command with `--offline` only in restricted test environments. It is a test-only file renderer and explicitly annotates its report. It is never imported by the production worker. Offline tests also require the dev dependencies.
-
-For fixture evidence and editable regeneration:
+After installing and building the resulting fixture's React project, run:
 
 ```bash
-python -m scripts.check_editing --job fixture-result.json --data .frameport-check --output editing-result.json
-python -m scripts.make_preview --job fixture-result.json --data .frameport-check --output studio-preview.html
-python -m scripts.check_preview --preview studio-preview.html --output .frameport-ui-check
+python -m scripts.check_acceptance --job fixture-result.json --data .frameport-check --output artifacts/acceptance
 ```
 
-`check_editing` intentionally uses the offline authored-file harness and labels it. CI is configured to attempt real local-fixture browser navigation and an actual npm React build after repository upload. **No GitHub Actions result is claimed until CI runs.** No lockfiles were fabricated; create and commit genuine locks after successful installation.
+This acceptance runner refuses offline reference evidence and tests actual HTTP, authentication, preview isolation, source browsing, content regeneration and browser ZIP downloads. CI uses the unsandboxed browser switch only for the trusted authored fixture, not as a production isolation assurance.
 
-## Repository and next engineering gate
+The root npm lockfile was recovered from an actual successful CI install. Export lockfiles are produced by real installs. `scripts/check_fixture --offline`, `check_editing` and `check_preview` are explicitly limited test harnesses; they are not substitutes for normal navigation. `scripts/make_preview` packages existing results into a portable, read-only studio preview, not a live conversion service.
 
-The source is ready for a private `EmotiveImpact/frameport` repository. No remote repository was created or modified in this delivery. See `STATUS.md`, `ROADMAP.md`, `docs/ARCHITECTURE.md`, `docs/SECURITY.md`, `docs/CHANGELOG.md` and the experimental bridge adapter under `integrations/framer-plugin`.
-
-The next acceptance gate is a clean run on an authorised, genuinely Framer-published marketing site, followed by the generated React production build and normal-browser preview interaction tests. Expand supported behaviour with small regression fixtures rather than hiding differences behind an unqualified “100%” claim.
+See [STATUS.md](STATUS.md), [ROADMAP.md](ROADMAP.md) and [ARCHITECTURE.md](docs/ARCHITECTURE.md). The next external acceptance target is an authorised, genuinely Framer-published marketing site.
