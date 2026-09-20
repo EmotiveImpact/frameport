@@ -34,7 +34,7 @@ async def main():
     job=store.get(record['id'])
     Path(args.output).write_text(json.dumps(job,indent=2))
     report=job.get('report') or {}
-    print(json.dumps(dict(id=job['id'],status=job['status'],error=job.get('error'),verdict=report.get('verdict'),comparisons=[dict(page=c['page'],width=c['width'],passed=c['passed'],difference=c.get('differencePercent')) for c in report.get('comparisons',[])],checks=report.get('checks'),issues=report.get('issues')),indent=2),flush=True)
+    print(json.dumps(dict(id=job['id'],status=job['status'],error=job.get('error'),verdict=report.get('verdict'),comparisons=[dict(page=c['page'],width=c['width'],passed=c['passed'],difference=c.get('difference')) for c in report.get('comparisons',[])],checks=report.get('checks'),issues=report.get('issues')),indent=2),flush=True)
     if job['status']!='completed' or report.get('verdict')!='visual-pass':raise SystemExit(1)
 
 if __name__=='__main__':asyncio.run(main())

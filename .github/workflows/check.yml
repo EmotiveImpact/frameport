@@ -15,7 +15,7 @@ jobs:
         with:
           node-version: '22'
       - run: pip install -e '.[dev]'
-      - run: npm install --ignore-scripts
+      - run: npm ci --ignore-scripts
       - run: npm run build && npm run typecheck
       - run: pytest -q
       - run: python -m playwright install --with-deps chromium
@@ -24,12 +24,16 @@ jobs:
         env:
           FRAMEPORT_UNSANDBOXED_TEST_BROWSER: '1'
         run: python -m scripts.check_fixture --data .frameport-ci --output fixture-result.json
-      - name: Compile generated React with installed dependencies
+      - name: Audit and compile generated React with installed dependencies
         shell: bash
         run: |
+          set -o pipefail
+          mkdir -p artifacts/acceptance
+          AUDIT="$PWD/artifacts/acceptance/npm-audit.json"
           JOB=$(python -c "import json; print(json.load(open('fixture-result.json'))['id'])")
           cd ".frameport-ci/jobs/$JOB/react"
           npm install --ignore-scripts
+          npm audit --audit-level=high --json | tee "$AUDIT"
           npm run build
       - name: React visual checks and authenticated studio acceptance
         env:
@@ -46,9 +50,13 @@ jobs:
           path: |
             fixture-result.json
             .frameport-ci/jobs/*/report.json
+            .frameport-ci/jobs/*/model.json
             .frameport-ci/jobs/*/evidence
+            .frameport-ci/jobs/*/html.zip
+            .frameport-ci/jobs/*/react.zip
             artifacts/acceptance/*.json
             artifacts/acceptance/*.png
             artifacts/acceptance/console.txt
+            artifacts/acceptance/edited-*.zip
             package-lock.json
             .frameport-ci/jobs/*/react/package-lock.json
