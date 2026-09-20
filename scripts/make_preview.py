@@ -19,6 +19,9 @@ def main():
     document=document.replace('<link rel="stylesheet" href="/static/style.css">','<style>'+(ROOT/'web/style.css').read_text()+'</style>')
     setup='<script>window.__FRAMEPORT_PREVIEW__='+json.dumps(payload,ensure_ascii=True).replace('</','<\\/')+';</script>'
     code=(ROOT/'web/dist/app.js').read_text().replace('</script','<\\/script')
+    # The portable preview resolves our sole local shader module without a server.
+    shader=base64.b64encode((ROOT/'web/dist/eclipse.js').read_bytes()).decode()
+    code=code.replace("from './eclipse.js'", "from 'data:text/javascript;base64,"+shader+"'")
     document=document.replace('<script type="module" src="/static/dist/app.js"></script>',setup+'<script type="module">'+code+'</script>')
     Path(a.output).write_text(document)
     print(a.output,Path(a.output).stat().st_size)

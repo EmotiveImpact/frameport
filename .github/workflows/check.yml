@@ -19,6 +19,10 @@ jobs:
       - run: npm run build && npm run typecheck
       - run: pytest -q
       - run: python -m playwright install --with-deps chromium
+      - name: Monochrome studio and original WebGL shader
+        env:
+          FRAMEPORT_UNSANDBOXED_TEST_BROWSER: '1'
+        run: python -m scripts.check_design --software-gl --output artifacts/design
       - name: Authored fixture through real browser navigation
         # Only our trusted local fixture; not a production sandbox assurance.
         env:
@@ -48,6 +52,8 @@ jobs:
         with:
           name: fixture-evidence
           path: |
+            artifacts/design/*.json
+            artifacts/design/*.png
             fixture-result.json
             .frameport-ci/jobs/*/report.json
             .frameport-ci/jobs/*/model.json
