@@ -15,7 +15,12 @@ dependencies = [
 dev = ["pytest==9.0.2", "httpx==0.28.1", "beautifulsoup4>=4.13,<5"]
 [project.scripts]
 frameport = "frameport.cli:main"
+
+[tool.vercel]
+entrypoint = "vercel_app:app"
+
 [tool.setuptools.packages.find]
 include = ["frameport*"]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
