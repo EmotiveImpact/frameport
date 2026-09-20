@@ -1,31 +1,31 @@
 # Frameport status
 
-**20 September 2026 | Monochrome studio and original eclipse shader | EmotiveImpact/frameport**
+**20 September 2026 | Heavier typography and enlarged silver-fold shader | EmotiveImpact/frameport**
 
-## Current code and GitHub verification
+## Current tested application code
 
-The approved black studio is implemented on `main`, including the original live WebGL hero artwork. Tested code commit: `4710254f4c773d261edb604c46ead6335d368525`. [GitHub Actions run 35514576325](https://github.com/EmotiveImpact/frameport/actions/runs/35514576325), job `106088235326`, completed successfully. This status update is documentation only.
+The updated presentation is implemented on `main`. Tested code commit: `bb2c4d4ff7e84c40172bd1840d05fa8649c07fd0`. [GitHub Actions run 35527121933](https://github.com/EmotiveImpact/frameport/actions/runs/35527121933), job `106121112496`, completed successfully. This status update changes documentation only.
 
-The latest downloaded evidence archive is artefact `10606232397`, SHA-256 `315144f2552d073cd67d782609399063fc0f4965833b791d6d76a1499895834c`. Its actual desktop and mobile screenshots were inspected. A hidden-scroll-container issue that clipped the heading during canvas inspection was corrected with non-scrolling hero clipping and a dedicated regression assertion.
+Downloaded evidence artefact `10609698687` was verified against SHA-256 `7e1fbd13df26ecfba20a9ca4f407a1d4d5a283813bd2355f0e7ecea574a9b0ae`. The actual WebGL hero, mobile composition and source editor screenshots were inspected.
 
-## Delivered design
+## What changed
 
-Pure black background, white and grey typography, top navigation instead of a sidebar, restrained borders and white primary buttons. The design covers the home/conversion screen, project history, progress, source code, content editor, verification and documentation. The original website inside the preview is not recoloured.
+`web/presentation.css` gives headings, navigation and controls actual semibold weight 600; body, editable text and source code use medium weight 500. Code is at least 12px in the tested layouts. The interface remains black with white/grey text and restrained borders. Mobile headline sizing preserves three lines rather than spilling into five. System font faces vary by operating system; no font binaries or artificial text strokes are included.
 
-`web/src/eclipse.ts` implements the original greyscale folded-disc shader in native WebGL. There is no new runtime dependency, copied Monitor source, external texture or embedded Framer template. The hero supports manual pause, reduced motion, offscreen suspension, bounded drawing resolution, context recovery and a static CSS fallback. See `docs/MONOCHROME.md` for the implementation and operating limits.
+The shader was already present, but its earlier rendering was too small and faint. `web/src/eclipse.ts` now renders a wider elliptical silhouette, a stronger silver shoulder and a curved, one-sided folded surface. The hero artwork extends beyond the right viewport edge while copy remains aligned and readable. Narrow tablet and mobile layouts place the artwork below the copy.
+
+This is original native WebGL, not a background image, external texture or embedded Framer template. Pause, reduced motion, offscreen suspension, bounded resolution, disposal and context recovery remain implemented. WebGL-unavailable devices display the explicitly labelled static CSS fallback. The portable preview now includes the new presentation stylesheet and the compiled shader.
 
 ## Measured results for this code
 
-The latest CI passed 75 unit/API cases, 46 design/shader/responsive checks, 10 HTML comparisons, 17 HTML render/disclosure checks, a clean generated React build, 10 independently built React comparisons and 44 real-browser editing/download acceptance checks. The design and acceptance reports contain no uncaught browser errors. The generated dependency audit reported zero vulnerabilities at that run.
+The successful CI run passed 78 unit/API cases, 46 existing design/shader checks, 77 additional typography/presentation checks, 10 HTML comparisons, 17 HTML render/disclosure checks, a clean generated React production build, 10 independently built React comparisons and 44 real-browser editing/download acceptance checks. The design, presentation and acceptance reports contain no uncaught browser errors.
 
-A separate local portable-preview check passed 20 screen/viewport checks and source/content assertions. That local test used the authored HTML preview and a CSS fallback, not live browser-to-worker integration or GPU rendering. The WebGL verification above came from explicit software rendering in CI.
+The shader tests confirm that actual rendered pixels change while running, stop when paused/offscreen, remain monochrome, and recover after context loss. Typography tests cover the actual HTTP app at 1440, 768, 390 and 320px. A source-font assertion was changed to await settled CSS because asynchronous source loading can replace the selected DOM element. The weight requirement was not lowered. A separate local portable-preview test passed 20 screen/viewport checks; that local test uses CSS fallback, not WebGL or HTTP evidence.
 
-## Preserved functionality and boundaries
+## Preserved scope and limits
 
-The capture engine, compiler, authentication, network policies and sandboxed export preview were not changed by the redesign. Real content editing, revision invalidation and browser downloads of both React and HTML remain tested on the original Forma fixture.
+The capture engine, compiler, authentication, network policy and sandboxed export preview were not changed. Content editing, revision invalidation and React/HTML downloads remain tested on the original Forma fixture.
 
-A genuinely Framer-published source, the plugin inside Framer, Docker operation, production browser/tenant isolation and arbitrary advanced Framer behaviours remain outside demonstrated coverage. CI's authored fixture and software WebGL tests do not establish compatibility with every website, physical GPU or browser. Per-conversion reports still do not automatically verify React production builds.
+CI uses authored fixtures and software WebGL. A genuine Framer-published source, the editor plugin, Docker, production tenant/browser isolation, arbitrary advanced Framer behaviours and every physical GPU/browser remain outside demonstrated coverage. Per-conversion reports do not automatically verify React builds. No public hosted service was deployed in this update.
 
-## Running the updated tool
-
-From the repository folder, run `git pull --ff-only`, then `bash scripts/start.sh`, and open `http://127.0.0.1:8040`. The source and compiled studio are on GitHub. No hosted public conversion service was deployed in this delivery.
+Run `git pull --ff-only` in the repository, restart the local worker and reload the app. See `docs/PRESENTATION.md` and `docs/MONOCHROME.md` for implementation details.
