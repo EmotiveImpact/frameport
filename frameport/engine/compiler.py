@@ -199,7 +199,7 @@ def jsx_attrs(attrs, svg=False):
             key = re.sub(r"-([a-z])",lambda m:m[1].upper(),key)
         if ":" in key:
             continue
-        if k in {"tabindex","colspan","rowspan","maxlength","minlength","size","span","start"} and re.fullmatch(r"-?\d+",v):
+        if k in {"tabindex","colspan","rowspan","maxlength","minlength","size","span","start","rows","cols"} and re.fullmatch(r"-?\d+",v):
             parts.append(f"{key}={{{int(v)}}}")
         elif k in BOOLEAN:
             parts.append(f"{key}={{true}}")
