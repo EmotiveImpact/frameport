@@ -7,6 +7,11 @@ remain the supported path for actual conversion jobs.
 from pathlib import Path
 import os
 
+# Vercel may define optional environment variables as empty strings. Normalise
+# settings that are parsed as integers before constructing the application.
+if not os.environ.get("FRAMEPORT_RETENTION_DAYS"):
+    os.environ["FRAMEPORT_RETENTION_DAYS"] = "7"
+
 from frameport.app import create_app
 from frameport.config import Settings
 
