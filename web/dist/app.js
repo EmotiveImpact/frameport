@@ -137,8 +137,19 @@ function pollJob() { clearTimeout(state.poll); if (!state.job || !['queued', 'ru
         state.jobs[i] = job;
     else
         state.jobs.unshift(job);
-    if (state.view === 'project')
-        render();
+    if (state.view === 'project') {
+        if (job.status === 'completed') {
+            state.files = [];
+            state.file = '';
+            state.code = '';
+            state.contents = [];
+            render();
+            if (state.tab === 'source' || state.tab === 'content')
+                await changeTab(state.tab);
+        }
+        else
+            render();
+    }
     pollJob();
 }
 catch (e) {
@@ -151,6 +162,10 @@ async function submitJob(payload) { try {
     state.view = 'project';
     state.tab = 'preview';
     state.edits.clear();
+    state.files = [];
+    state.file = '';
+    state.code = '';
+    state.contents = [];
     render();
     pollJob();
 }
