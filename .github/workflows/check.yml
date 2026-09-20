@@ -1,0 +1,41 @@
+name: Frameport checks
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: pip install -e '.[dev]'
+      - run: npm install --ignore-scripts
+      - run: npm run build && npm run typecheck
+      - run: pytest -q
+      - run: python -m playwright install --with-deps chromium
+      - name: Authored fixture through real browser navigation
+        # Only our trusted local fixture; not a production sandbox assurance.
+        env:
+          FRAMEPORT_UNSANDBOXED_TEST_BROWSER: '1'
+        run: python -m scripts.check_fixture --data .frameport-ci --output fixture-result.json
+      - name: Compile generated React with installed dependencies
+        shell: bash
+        run: |
+          JOB=$(python -c "import json; print(json.load(open('fixture-result.json'))['id'])")
+          cd ".frameport-ci/jobs/$JOB/react"
+          npm install --ignore-scripts
+          npm run build
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: fixture-evidence
+          path: |
+            fixture-result.json
+            .frameport-ci/jobs/*/report.json
+            .frameport-ci/jobs/*/evidence

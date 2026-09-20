@@ -1,0 +1,63 @@
+{
+  "job": "7b19f862af8b4d708c3a259445003174",
+  "mode": "actual API requests and export regeneration; offline-document Chromium harness",
+  "checks": [
+    {
+      "name": "Completed React ZIP downloadable",
+      "passed": true
+    },
+    {
+      "name": "Scoped preview serves HTML",
+      "passed": true
+    },
+    {
+      "name": "Forged ticket rejected",
+      "passed": true
+    },
+    {
+      "name": "Edit accepted and revision incremented",
+      "passed": true
+    },
+    {
+      "name": "Old exports blocked during rebuild",
+      "passed": true
+    },
+    {
+      "name": "Old preview invalidated",
+      "passed": true
+    },
+    {
+      "name": "Regeneration completed",
+      "passed": true
+    },
+    {
+      "name": "New React JSON contains edit",
+      "passed": true
+    },
+    {
+      "name": "HTML edit escaped rather than executed",
+      "passed": true
+    },
+    {
+      "name": "Intentional visual difference detected",
+      "passed": true
+    },
+    {
+      "name": "Rebuilt ZIP downloadable",
+      "passed": true
+    },
+    {
+      "name": "Revision invalidates old signed ticket",
+      "passed": true
+    },
+    {
+      "name": "New ticket works",
+      "passed": true
+    },
+    {
+      "name": "Unknown content field rejected",
+      "passed": true
+    }
+  ],
+  "changedComparisons": 5
+}

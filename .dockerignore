@@ -1,0 +1,9 @@
+.git
+.venv
+node_modules
+.frameport*
+__pycache__
+.pytest_cache
+.env
+*.zip
+*.bundle

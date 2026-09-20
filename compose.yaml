@@ -1,0 +1,17 @@
+services:
+  frameport:
+    build: .
+    init: true
+    ports: ["127.0.0.1:8040:8040"]
+    environment:
+      FRAMEPORT_API_KEY: ${FRAMEPORT_API_KEY:?Set a random access key of at least 24 characters}
+      FRAMEPORT_ALLOWED_HOSTS: localhost,127.0.0.1
+      FRAMEPORT_DATA: /data
+    volumes: ["frameport-data:/data"]
+    shm_size: 512mb
+    mem_limit: 2g
+    cpus: 2
+    pids_limit: 256
+    restart: unless-stopped
+volumes:
+  frameport-data:

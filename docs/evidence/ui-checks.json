@@ -1,0 +1,126 @@
+{
+  "mode": "offline portable preview UI; no browser HTTP navigation or live API integration",
+  "checks": [
+    {
+      "view": "overview",
+      "width": 1440,
+      "passed": true,
+      "horizontalOverflow": false
+    },
+    {
+      "view": "workspace",
+      "width": 1440,
+      "passed": true,
+      "horizontalOverflow": false
+    },
+    {
+      "view": "source",
+      "width": 1440,
+      "passed": true,
+      "horizontalOverflow": false
+    },
+    {
+      "view": "content",
+      "width": 1440,
+      "passed": true,
+      "horizontalOverflow": false
+    },
+    {
+      "view": "report",
+      "width": 1440,
+      "passed": true,
+      "horizontalOverflow": false
+    },
+    {
+      "view": "overview",
+      "width": 1024,
+      "passed": true,
+      "horizontalOverflow": false
+    },
+    {
+      "view": "workspace",
+      "width": 1024,
+      "passed": true,
+      "horizontalOverflow": false
+    },
+    {
+      "view": "source",
+      "width": 1024,
+      "passed": true,
+      "horizontalOverflow": false
+    },
+    {
+      "view": "content",
+      "width": 1024,
+      "passed": true,
+      "horizontalOverflow": false
+    },
+    {
+      "view": "report",
+      "width": 1024,
+      "passed": true,
+      "horizontalOverflow": false
+    },
+    {
+      "view": "overview",
+      "width": 768,
+      "passed": true,
+      "horizontalOverflow": false
+    },
+    {
+      "view": "workspace",
+      "width": 768,
+      "passed": true,
+      "horizontalOverflow": false
+    },
+    {
+      "view": "source",
+      "width": 768,
+      "passed": true,
+      "horizontalOverflow": false
+    },
+    {
+      "view": "content",
+      "width": 768,
+      "passed": true,
+      "horizontalOverflow": false
+    },
+    {
+      "view": "report",
+      "width": 768,
+      "passed": true,
+      "horizontalOverflow": false
+    },
+    {
+      "view": "overview",
+      "width": 390,
+      "passed": true,
+      "horizontalOverflow": false
+    },
+    {
+      "view": "workspace",
+      "width": 390,
+      "passed": true,
+      "horizontalOverflow": false
+    },
+    {
+      "view": "source",
+      "width": 390,
+      "passed": true,
+      "horizontalOverflow": false
+    },
+    {
+      "view": "content",
+      "width": 390,
+      "passed": true,
+      "horizontalOverflow": false
+    },
+    {
+      "view": "report",
+      "width": 390,
+      "passed": true,
+      "horizontalOverflow": false
+    }
+  ],
+  "consoleErrors": []
+}

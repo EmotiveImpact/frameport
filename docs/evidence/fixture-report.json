@@ -1,0 +1,432 @@
+{
+  "version": 1,
+  "verdict": "visual-pass",
+  "visualPassed": true,
+  "checksPassed": true,
+  "comparisons": [
+    {
+      "page": "p0",
+      "route": "/",
+      "width": 1440,
+      "source": "p0-1440-source.png",
+      "export": "p0-1440-export.png",
+      "diff": "p0-1440-diff.png",
+      "documentHeight": 1855,
+      "capturedHeight": 1855,
+      "clipped": false,
+      "changedPixels": 0,
+      "totalPixels": 2671200,
+      "difference": 0.0,
+      "matchedPixels": 100.0,
+      "dimensionsMatch": true,
+      "passed": true,
+      "threshold": 0.02,
+      "channelTolerance": 22
+    },
+    {
+      "page": "p0",
+      "route": "/",
+      "width": 1024,
+      "source": "p0-1024-source.png",
+      "export": "p0-1024-export.png",
+      "diff": "p0-1024-diff.png",
+      "documentHeight": 1707,
+      "capturedHeight": 1707,
+      "clipped": false,
+      "changedPixels": 0,
+      "totalPixels": 1747968,
+      "difference": 0.0,
+      "matchedPixels": 100.0,
+      "dimensionsMatch": true,
+      "passed": true,
+      "threshold": 0.02,
+      "channelTolerance": 22
+    },
+    {
+      "page": "p0",
+      "route": "/",
+      "width": 768,
+      "source": "p0-768-source.png",
+      "export": "p0-768-export.png",
+      "diff": "p0-768-diff.png",
+      "documentHeight": 1707,
+      "capturedHeight": 1707,
+      "clipped": false,
+      "changedPixels": 0,
+      "totalPixels": 1310976,
+      "difference": 0.0,
+      "matchedPixels": 100.0,
+      "dimensionsMatch": true,
+      "passed": true,
+      "threshold": 0.02,
+      "channelTolerance": 22
+    },
+    {
+      "page": "p0",
+      "route": "/",
+      "width": 540,
+      "source": "p0-540-source.png",
+      "export": "p0-540-export.png",
+      "diff": "p0-540-diff.png",
+      "documentHeight": 2369,
+      "capturedHeight": 2369,
+      "clipped": false,
+      "changedPixels": 0,
+      "totalPixels": 1279260,
+      "difference": 0.0,
+      "matchedPixels": 100.0,
+      "dimensionsMatch": true,
+      "passed": true,
+      "threshold": 0.02,
+      "channelTolerance": 22
+    },
+    {
+      "page": "p0",
+      "route": "/",
+      "width": 390,
+      "source": "p0-390-source.png",
+      "export": "p0-390-export.png",
+      "diff": "p0-390-diff.png",
+      "documentHeight": 2225,
+      "capturedHeight": 2225,
+      "clipped": false,
+      "changedPixels": 0,
+      "totalPixels": 867750,
+      "difference": 0.0,
+      "matchedPixels": 100.0,
+      "dimensionsMatch": true,
+      "passed": true,
+      "threshold": 0.02,
+      "channelTolerance": 22
+    },
+    {
+      "page": "p1",
+      "route": "/about/",
+      "width": 1440,
+      "source": "p1-1440-source.png",
+      "export": "p1-1440-export.png",
+      "diff": "p1-1440-diff.png",
+      "documentHeight": 1244,
+      "capturedHeight": 1244,
+      "clipped": false,
+      "changedPixels": 0,
+      "totalPixels": 1791360,
+      "difference": 0.0,
+      "matchedPixels": 100.0,
+      "dimensionsMatch": true,
+      "passed": true,
+      "threshold": 0.02,
+      "channelTolerance": 22
+    },
+    {
+      "page": "p1",
+      "route": "/about/",
+      "width": 1024,
+      "source": "p1-1024-source.png",
+      "export": "p1-1024-export.png",
+      "diff": "p1-1024-diff.png",
+      "documentHeight": 1221,
+      "capturedHeight": 1221,
+      "clipped": false,
+      "changedPixels": 0,
+      "totalPixels": 1250304,
+      "difference": 0.0,
+      "matchedPixels": 100.0,
+      "dimensionsMatch": true,
+      "passed": true,
+      "threshold": 0.02,
+      "channelTolerance": 22
+    },
+    {
+      "page": "p1",
+      "route": "/about/",
+      "width": 768,
+      "source": "p1-768-source.png",
+      "export": "p1-768-export.png",
+      "diff": "p1-768-diff.png",
+      "documentHeight": 1221,
+      "capturedHeight": 1221,
+      "clipped": false,
+      "changedPixels": 0,
+      "totalPixels": 937728,
+      "difference": 0.0,
+      "matchedPixels": 100.0,
+      "dimensionsMatch": true,
+      "passed": true,
+      "threshold": 0.02,
+      "channelTolerance": 22
+    },
+    {
+      "page": "p1",
+      "route": "/about/",
+      "width": 540,
+      "source": "p1-540-source.png",
+      "export": "p1-540-export.png",
+      "diff": "p1-540-diff.png",
+      "documentHeight": 1123,
+      "capturedHeight": 1123,
+      "clipped": false,
+      "changedPixels": 0,
+      "totalPixels": 606420,
+      "difference": 0.0,
+      "matchedPixels": 100.0,
+      "dimensionsMatch": true,
+      "passed": true,
+      "threshold": 0.02,
+      "channelTolerance": 22
+    },
+    {
+      "page": "p1",
+      "route": "/about/",
+      "width": 390,
+      "source": "p1-390-source.png",
+      "export": "p1-390-export.png",
+      "diff": "p1-390-diff.png",
+      "documentHeight": 1140,
+      "capturedHeight": 1140,
+      "clipped": false,
+      "changedPixels": 0,
+      "totalPixels": 444600,
+      "difference": 0.0,
+      "matchedPixels": 100.0,
+      "dimensionsMatch": true,
+      "passed": true,
+      "threshold": 0.02,
+      "channelTolerance": 22
+    }
+  ],
+  "checks": [
+    {
+      "name": "render",
+      "page": "p0",
+      "width": 1440,
+      "passed": true,
+      "brokenImages": 0,
+      "horizontalOverflow": false
+    },
+    {
+      "name": "native-disclosure",
+      "page": "p0",
+      "passed": true
+    },
+    {
+      "name": "native-disclosure",
+      "page": "p0",
+      "passed": true
+    },
+    {
+      "name": "native-disclosure",
+      "page": "p0",
+      "passed": true
+    },
+    {
+      "name": "render",
+      "page": "p0",
+      "width": 1024,
+      "passed": true,
+      "brokenImages": 0,
+      "horizontalOverflow": false
+    },
+    {
+      "name": "render",
+      "page": "p0",
+      "width": 768,
+      "passed": true,
+      "brokenImages": 0,
+      "horizontalOverflow": false
+    },
+    {
+      "name": "render",
+      "page": "p0",
+      "width": 540,
+      "passed": true,
+      "brokenImages": 0,
+      "horizontalOverflow": false
+    },
+    {
+      "name": "render",
+      "page": "p0",
+      "width": 390,
+      "passed": true,
+      "brokenImages": 0,
+      "horizontalOverflow": false
+    },
+    {
+      "name": "native-disclosure",
+      "page": "p0",
+      "passed": true
+    },
+    {
+      "name": "native-disclosure",
+      "page": "p0",
+      "passed": true
+    },
+    {
+      "name": "native-disclosure",
+      "page": "p0",
+      "passed": true
+    },
+    {
+      "name": "aria-disclosure",
+      "page": "p0",
+      "passed": true
+    },
+    {
+      "name": "render",
+      "page": "p1",
+      "width": 1440,
+      "passed": true,
+      "brokenImages": 0,
+      "horizontalOverflow": false
+    },
+    {
+      "name": "render",
+      "page": "p1",
+      "width": 1024,
+      "passed": true,
+      "brokenImages": 0,
+      "horizontalOverflow": false
+    },
+    {
+      "name": "render",
+      "page": "p1",
+      "width": 768,
+      "passed": true,
+      "brokenImages": 0,
+      "horizontalOverflow": false
+    },
+    {
+      "name": "render",
+      "page": "p1",
+      "width": 540,
+      "passed": true,
+      "brokenImages": 0,
+      "horizontalOverflow": false
+    },
+    {
+      "name": "render",
+      "page": "p1",
+      "width": 390,
+      "passed": true,
+      "brokenImages": 0,
+      "horizontalOverflow": false
+    }
+  ],
+  "issues": [
+    {
+      "code": "runtime-scope",
+      "severity": "info",
+      "message": "Source scripts are not shipped. Native HTML, CSS states and explicit aria-controls adapters are supported; arbitrary Framer behaviours are not verified.",
+      "page": "/",
+      "count": 1
+    },
+    {
+      "code": "form",
+      "message": "Form presentation is exported. Submission is disabled until you connect a backend.",
+      "severity": "warning",
+      "page": "/about/",
+      "count": 1
+    },
+    {
+      "code": "runtime-scope",
+      "severity": "info",
+      "message": "Source scripts are not shipped. Native HTML, CSS states and explicit aria-controls adapters are supported; arbitrary Framer behaviours are not verified.",
+      "page": "/about/",
+      "count": 1
+    }
+  ],
+  "externalRequests": [],
+  "browserErrors": [],
+  "coverage": {
+    "pages": 2,
+    "widths": [
+      390,
+      540,
+      768,
+      1024,
+      1440
+    ],
+    "maxHeight": 6000,
+    "colourScheme": "light",
+    "motion": "reduced",
+    "target": "HTML reconstruction",
+    "states": "Initial page; native details and visible aria-controls disclosures only"
+  },
+  "reactBuild": {
+    "status": "not-run",
+    "message": "React source is generated. Its npm install, strict type check and production build must be run separately; HTML screenshot results do not verify React."
+  },
+  "caveat": "Visual pass refers only to the captured HTML states, not complete functional equivalence, all breakpoints, backend migration or the original Framer source.",
+  "execution": {
+    "mode": "offline-document-harness",
+    "browserNavigationVerified": false,
+    "description": "Only original local fixture files and generated files were rendered with set_content. Administrator browser navigation restrictions were not changed. This is not a live Framer benchmark."
+  },
+  "components": [
+    {
+      "name": "Navigation",
+      "file": "src/components/Navigation.tsx",
+      "page": "p0"
+    },
+    {
+      "name": "Hero",
+      "file": "src/components/Hero.tsx",
+      "page": "p0"
+    },
+    {
+      "name": "SelectedWork",
+      "file": "src/components/SelectedWork.tsx",
+      "page": "p0"
+    },
+    {
+      "name": "FrequentlyAsked",
+      "file": "src/components/FrequentlyAsked.tsx",
+      "page": "p0"
+    },
+    {
+      "name": "Footer",
+      "file": "src/components/Footer.tsx",
+      "page": "p0"
+    },
+    {
+      "name": "Navigation2",
+      "file": "src/components/Navigation2.tsx",
+      "page": "p1"
+    },
+    {
+      "name": "AboutHero",
+      "file": "src/components/AboutHero.tsx",
+      "page": "p1"
+    },
+    {
+      "name": "Contact",
+      "file": "src/components/Contact.tsx",
+      "page": "p1"
+    },
+    {
+      "name": "Footer2",
+      "file": "src/components/Footer2.tsx",
+      "page": "p1"
+    }
+  ],
+  "assets": 1,
+  "nodes": 197,
+  "textCount": 74,
+  "pages": [
+    {
+      "key": "p0",
+      "route": "/",
+      "title": "Forma \u2014 Independent by design",
+      "framerDetected": true
+    },
+    {
+      "key": "p1",
+      "route": "/about/",
+      "title": "About \u2014 Forma",
+      "framerDetected": true
+    }
+  ],
+  "revision": 0,
+  "demo": true,
+  "createdAt": 1789892344.774552
+}
