@@ -16,7 +16,8 @@ def main():
     payload=dict(job=job,evidence={f.name:data(f) for f in (root/'evidence').glob('*.png')},files={str(f.relative_to(root/'react')):f.read_text() for f in (root/'react').rglob('*') if f.is_file() and f.suffix in readable},htmlFiles={str(f.relative_to(root/'html')):f.read_text() for f in (root/'html').rglob('*') if f.is_file() and f.suffix in readable},content=[dict(id=k,text=v) for k,v in json.loads((root/'model.json').read_text())['texts'].items() if v.strip()],downloads={t:data(root/f'{t}.zip') for t in ('react','html')})
     document=(ROOT/'web/index.html').read_text()
     document=re.sub(r'<link[^>]+rel="icon"[^>]*>','',document)
-    document=document.replace('<link rel="stylesheet" href="/static/style.css">','<style>'+(ROOT/'web/style.css').read_text()+'</style>')
+    for stylesheet in ('style.css', 'presentation.css'):
+        document=document.replace(f'<link rel="stylesheet" href="/static/{stylesheet}">', '<style>'+(ROOT/'web'/stylesheet).read_text()+'</style>')
     setup='<script>window.__FRAMEPORT_PREVIEW__='+json.dumps(payload,ensure_ascii=True).replace('</','<\\/')+';</script>'
     code=(ROOT/'web/dist/app.js').read_text().replace('</script','<\\/script')
     # The portable preview resolves our sole local shader module without a server.

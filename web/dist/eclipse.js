@@ -11,33 +11,40 @@ uniform float uTime;
 uniform float uIntensity;
 void main() {
   vec2 p = (gl_FragCoord.xy - 0.5 * uResolution) / uResolution.y;
-  p -= vec2(0.055, 0.0);
-  float turn = -0.20 + 0.055 * sin(uTime * 0.10);
+  p -= vec2(0.10, 0.0);
+  float turn = -0.09 + 0.035 * sin(uTime * 0.10);
   float c = cos(turn), s = sin(turn);
   vec2 q = mat2(c, -s, s, c) * p;
-  q.x /= 1.10;
-  q.y /= 0.94;
+  q /= vec2(1.40, 0.88);
   float r = length(q);
-  float radius = 0.405;
+  float radius = 0.45;
   float d = r - radius;
   float aa = 1.3 / uResolution.y;
   float inside = 1.0 - smoothstep(-aa, aa, d);
   vec2 n = q / max(r, 0.0001);
-  float upper = pow(max(dot(n, normalize(vec2(-0.67, 0.74))), 0.0), 7.0);
-  float lower = pow(max(dot(n, normalize(vec2(0.67, -0.74))), 0.0), 4.0);
-  float lighting = upper + lower * 0.70;
-  float rim = exp(-abs(d) / max(0.0014, aa)) * lighting;
-  float innerRim = exp(-abs(d) / 0.011) * lighting * inside;
-  float halo = exp(-abs(d) / 0.021) * lighting * 0.075;
-  // A folded, curved sheet rather than a neon ring or a glowing planet.
-  float fold = q.y + q.x * 0.82 + 0.06 * sin(q.x * 4.0 + uTime * 0.085);
-  float sheet = exp(-abs(fold) / 0.09) * smoothstep(-0.007, 0.022, fold);
-  float seam = exp(-abs(fold) / 0.0026) * smoothstep(0.06, 0.40, r);
-  float falloff = 0.25 + 0.75 * smoothstep(0.02, radius, r);
-  float surface = inside * (sheet * 0.22 * falloff + seam * 0.32 + innerRim * 0.18);
-  float luminance = (rim * 0.84 + innerRim * 0.20 + halo + surface) * uIntensity;
-  // No tinted fog, ambient grey wash or animated grain in the black negative space.
-  luminance *= 1.0 - smoothstep(0.46, 0.55, r);
+
+  // A broad silver shoulder at the left, with a brighter lower-right fold.
+  // The composition intentionally continues beyond the right viewport edge.
+  float shoulder = pow(max(dot(n, normalize(vec2(-0.76, 0.65))), 0.0), 3.0);
+  float underside = pow(max(dot(n, normalize(vec2(0.62, -0.78))), 0.0), 3.5);
+  float lighting = max(shoulder, underside * 1.18);
+  float rim = exp(-abs(d) / max(0.0020, aa)) * lighting;
+  float innerRim = exp(-abs(d) / 0.014) * lighting * inside;
+  float halo = exp(-abs(d) / 0.022) * lighting * 0.06;
+
+  // Curved, one-sided material falloff, not a wireframe slash across a sphere.
+  float fold = q.y + q.x * 0.82 - 0.09 * (q.x * q.x - 0.10)
+             + 0.018 * sin(uTime * 0.10 + q.x * 2.0);
+  float along = smoothstep(-0.34, 0.40, q.x);
+  float sheet = exp(-max(fold, 0.0) / (0.048 + along * 0.040))
+              * smoothstep(-aa, 0.012, fold);
+  float crease = exp(-abs(fold) / max(0.0030, aa));
+  float edgeFalloff = 0.36 + 0.64 * smoothstep(0.06, radius, r);
+  float surface = inside * edgeFalloff *
+    (sheet * (0.13 + 0.42 * along) + crease * (0.05 + 0.53 * along));
+  float luminance = (rim * 0.92 + innerRim * 0.32 + halo + surface) * uIntensity;
+  // Preserve true black beyond the local edge. No tinted bloom or grey fog.
+  luminance *= 1.0 - smoothstep(0.50, 0.58, r);
   gl_FragColor = vec4(vec3(clamp(luminance, 0.0, 1.0)), 1.0);
 }
 `;

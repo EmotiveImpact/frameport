@@ -1,0 +1,100 @@
+/* One presentation layer after the structural stylesheet. No font binaries,
+   text strokes or glow: actual medium/semibold type and original hero artwork. */
+:root {
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  --weight-body: 500;
+  --weight-ui: 600;
+  --weight-heading: 600;
+  --site-gutter: clamp(24px, 6.1vw, 88px);
+  font-weight: var(--weight-body);
+}
+button, input, select, textarea { font-weight: var(--weight-ui); }
+p { color: #b3b3b3; font-weight: var(--weight-body); }
+code, pre, kbd { font-weight: 500; }
+
+h1, h2, h3,
+.welcome h1, .section-intro h2, .section-title h2, .section-title h3,
+.bridge-panel h3, .job-info h3, .first-project h3, .mini-feature h3,
+.page-heading h1, .empty-state h2, .project-heading h1,
+.content-intro h3, .report-header h2, .verification-grid h3,
+.progress-card h2, .doc-card h2, .support-grid h3, .modal h2 {
+  font-weight: var(--weight-heading);
+}
+.brand, .eyebrow, .primary, .report-scope strong, .pipeline-list strong,
+.issue-row strong { font-weight: var(--weight-ui); }
+.typescript-mark > span, .result-stats strong, .result-stats small,
+.preview-foot b, .content-field b, .matrix-row > strong, .progress-label strong {
+  font-weight: var(--weight-body);
+}
+.brand { font-size: 19px; }
+.main-nav button { font-size: 13px; color: #aaa; }
+.primary { font-size: 13px; }
+.secondary { border-color: #3c3c3c; }
+.input-label { font-size: 12px; color: #c0c0c0; }
+.content-field textarea { font-size: 13px; font-weight: var(--weight-body); }
+.code-scroll pre { font: 500 12px/23px "SFMono-Regular", Consolas, monospace; }
+.line-numbers { font-size: 11px; line-height: 23px; }
+.text-button svg, .secondary svg { stroke-width: 1.8; }
+
+/* Bleed the artwork to the viewport edge rather than clipping it at the form
+   gutter. The readable text stays on the same alignment as the rest of the app. */
+.topbar, .page { padding-inline: var(--site-gutter); }
+.app-footer { margin-inline: var(--site-gutter); }
+.welcome {
+  min-height: 740px;
+  margin-inline: calc(0px - var(--site-gutter));
+  padding-inline: var(--site-gutter);
+}
+.welcome h1 { letter-spacing: -.055em; line-height: 1.035; }
+.welcome h1 > span { color: #8f8f8f; }
+.welcome p { font-size: 16px; line-height: 1.8; color: #bfbfbf; max-width: 510px; }
+.hero-visual { right: -22%; top: -30px; width: 90%; height: 720px; }
+.hero-caption { top: 155px; right: var(--site-gutter); }
+.hero-bottom { left: var(--site-gutter); right: var(--site-gutter); }
+
+/* A visibly related static composition for devices that cannot run WebGL.
+   The existing controller labels this Static artwork, never a running shader. */
+.eclipse-fallback {
+  width: 70%; height: 80%; left: 23%; top: 10%; transform: rotate(-8deg);
+  background: linear-gradient(38deg, #000 44%, #c9c9c9 44.5%, #444 46%, #121212 54%, #000 66%);
+  box-shadow: inset 2px 2px 3px #ddd, inset 8px 4px 23px #333;
+}
+.eclipse-fallback:after {
+  inset: -3px; box-shadow: none;
+  background: linear-gradient(125deg, transparent 15%, #000 68%);
+  mask-image: radial-gradient(ellipse at center, transparent 65%, #000 72%);
+}
+
+@media (min-width:1500px) {
+  .hero-visual { height: 750px; top: -25px; }
+  .welcome { min-height: 760px; }
+}
+@media (max-width:1100px) {
+  :root { --site-gutter: 4vw; }
+  .welcome { min-height: 690px; }
+  .hero-visual { right: -35%; width: 108%; height: 610px; top: 0; }
+}
+@media (max-width:760px) {
+  :root { --site-gutter: 23px; }
+  .hero-visual { width: 125%; right: -62%; top: 25px; height: 550px; }
+  .welcome p { font-size: 14px; max-width: 370px; }
+}
+/* Give the brighter artwork its own space on a narrow tablet. */
+@media (min-width:541px) and (max-width:900px) {
+  .welcome { min-height: 980px; padding-top: 60px; }
+  .welcome h1 { font-size: 64px; }
+  .hero-visual { right: -22%; top: 460px; width: 112%; height: 440px; }
+  .hero-caption { display: none; }
+}
+@media (max-width:540px) {
+  :root { --site-gutter: 20px; }
+  .brand { font-size: 16px; }
+  .main-nav button { font-size: 12px; }
+  .welcome { min-height: 790px; }
+  .welcome h1 { font-size: 52px; letter-spacing: -2.4px; }
+  .welcome p { font-size: 14px; line-height: 1.8; max-width: 345px; }
+  .hero-visual { height: 350px; width: 152%; right: -40%; top: 390px; }
+}
+@media (max-width:370px) {
+  .welcome h1 { font-size: 42px; }
+}
