@@ -1,41 +1,41 @@
 # Verification report
 
-**20 September 2026 | Current verified code: bf340ab3f8a8ee27c45fd7ec9ac58e385c844b1c**
+**20 September 2026 | Tested code 8418f820c78bfa600ee73d516678145cd342c2b9**
 
-## Actual GitHub run
+## Current result
 
-[Run 35504470191](https://github.com/EmotiveImpact/frameport/actions/runs/35504470191), job `106061831360`, completed successfully. Its downloaded `fixture-evidence` archive, artefact `10603592232`, was verified against SHA-256 `766440990244d14dec5590db8ceb3db541aaa64ebff8a4dcd525ab68d1a2c2ad`.
+[GitHub Actions run 35531590101](https://github.com/EmotiveImpact/frameport/actions/runs/35531590101), check job `106133040098`, completed successfully, followed by the success-only compiled-studio synchronisation job.
 
-| Check | Observed result |
+| Check | Measured result |
 |---|---|
-| Unit/API/security-contract suite | 75 passed |
-| Studio build and strict TypeScript | Passed |
-| Real HTTP Forma capture and HTML comparison | 10 of 10 passed |
+| Python unit, API and security tests | 125 passed |
+| URL router tests | 17 passed |
+| New gateway, session, durable queue and subprocess platform journey | 40 passed |
+| Retained browser editing/export acceptance | 44 passed |
+| Original WebGL shader/design suite | 46 passed |
+| Typography and presentation suite | 77 passed |
+| HTML/source comparison | 10 passed |
 | HTML render/disclosure checks | 17 passed |
-| Generated React dependency installation, strict check and Vite production build | Passed |
-| Built React versus original source, five widths on two pages | 10 of 10 passed |
-| Authenticated studio and real-browser acceptance | 44 passed |
-| Uncaught browser errors in acceptance | 0 |
-| Generated React dependency audit | 0 reported vulnerabilities |
+| Independent built-React/source comparison | 10 passed |
+| Generated React dependency install, strict check and production build | Passed |
+| Generated dependency audit | Zero reported vulnerabilities at the recorded run |
 
-The source fixture produced two pages, nine editable React components, 74 non-empty text fields and one local SVG asset. Both initial HTML and built-React comparisons recorded zero changed pixels under the stated channel tolerance. This is evidence for this authored fixture, not a percentage guarantee for arbitrary websites.
+The current artefact is `10611139479`, SHA-256 `7d0fcc7a3c658d12400bae2888afb3de69d3d6649d51f0ecaa44bb1259c5a92b`. The downloaded archive digest was checked before inspection. See `evidence/platform-ci.json` for machine-readable provenance.
 
-## Browser journey actually exercised
+## What the new journey demonstrates
 
-The runner uses actual HTTP navigation and rejects the earlier offline-document references. It opens installed React production output, checks local images and mobile disclosures, authenticates against a real Uvicorn/FastAPI worker, opens the sandboxed iframe and confirms it cannot access the parent document or service-worker API.
+An unseeded private workspace is opened through a real HTTP gateway. The test signs in and refreshes, confirms that another browser context remains unauthenticated, then creates the original Forma conversion. The durable queue claims it and an actual subprocess runs the capture/compiler/verification pipeline.
 
-It checks the response CSP, reads generated source, edits a field through the studio, waits for the real worker to regenerate it, confirms the editor and source viewer refresh, checks changed visual evidence and revoked old tickets, then downloads and opens both HTML and React ZIPs to verify the saved content. All 44 assertions passed. The intentionally changed heading is expected to differ from the original source; that does not represent a broken regeneration.
+The browser then reopens source by URL, refreshes, uses back navigation, renames the project, changes text, waits for regeneration, rejects a stale editor revision, reads saved revision history and downloads both actual ZIP archives. Their content contains the edit. The test checks responsive screens and logout, then confirms the project remains on disk after both servers stop. All 40 checks passed and no uncaught browser errors were recorded.
 
-## Corrections made during verification
+The pooled gateway client previously retained upstream cookies. A new regression demonstrated that an unauthenticated visitor could inherit that state. The fix uses explicit per-request headers plus a rejecting cookie policy. The unit case and real independent-context checks pass after the correction. No production worker had been connected during this development stage.
 
-Numeric textarea dimensions fixed the first strict React build failure. The source-view assertion now waits for the asynchronous fetch. Playwright's test-only service-worker injection was removed from the trusted studio test context because it accessed an unavailable API in opaque sandboxed frames; production capture blocking, iframe isolation and CSP remain intact and are explicitly tested.
+## Scope, not a universal guarantee
 
-Inspection of an initially green run's screenshot revealed stale text in the editor after rebuilding. The client now clears its old content/source caches and reloads the finished revision. Two additional browser assertions verify that correction. Vite 6.4.3, a genuine root lockfile and a generated-dependency audit were also added.
+The source is the original two-page Forma fixture, not a Framer-published website. CI's trusted authored-site tests use the explicitly marked unsandboxed test flag; they do not verify a production host's browser sandbox. The hosted start script refuses that flag.
 
-## Limits and historical evidence
+Vercel serves the new application and gateway. At the recorded check it has no configured persistent worker and therefore reports `canConvert: false`. A successful CI run is not a completed Railway deployment. The public worker, volume, provider sandbox and hosted conversion still require provisioning and verification.
 
-The live source is the original Forma fixture, **not a Framer-published site**. CI intentionally runs its trusted authored fixtures without the Chromium sandbox; it does not establish production isolation or public-service readiness. The editor plugin, Docker and arbitrary Framer interactions remain outside this evidence.
+The production conversion report verifies HTML states. The separate CI pipeline builds and compares the sample's React output. It must not be interpreted as automatic React build verification for every job. Likewise, schema/queue persistence tests are not a backup/restore assurance or multi-tenant isolation review.
 
-The production pipeline's per-conversion report verifies HTML only. The additional React production build and comparisons are performed separately by CI for this specific output. The report is not changed to claim automatic React verification for every job.
-
-Earlier `fixture-report.json`, `editing-checks.json`, `react-syntax.json`, `ui-checks.json` and `unit-tests.txt` in `docs/evidence` record the initial, explicitly labelled offline delivery. They are historical, not the latest CI result. `ci-summary.json` links the current measured result to its commit, run and archive digest. The archive retains full current reports, comparisons, source model, genuine lockfiles, screenshots and output ZIPs; private workspace keys and databases are excluded.
+Historical offline and earlier design reports remain under `docs/evidence`. Their names and original scope are preserved. `platform-ci.json` and this report describe the current platform result.

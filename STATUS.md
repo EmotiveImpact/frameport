@@ -1,31 +1,35 @@
 # Frameport status
 
-**20 September 2026 | Heavier typography and enlarged silver-fold shader | EmotiveImpact/frameport**
+**20 September 2026 | Routed private workspace and persistent conversion backend**
 
-## Current tested application code
+## Actual delivery state
 
-The updated presentation is implemented on `main`. Tested code commit: `bb2c4d4ff7e84c40172bd1840d05fa8649c07fd0`. [GitHub Actions run 35527121933](https://github.com/EmotiveImpact/frameport/actions/runs/35527121933), job `106121112496`, completed successfully. This status update changes documentation only.
+The new web application and stateless gateway are deployed at https://frameport.vercel.app. `/convert`, `/projects` and `/settings` respond successfully, and the new compiled router is served. The tested code deployment is Vercel `dpl_AUEjpEKj88c34VUU5KgY1DkFJqip`, state READY, from commit `8418f820c78bfa600ee73d516678145cd342c2b9`.
 
-Downloaded evidence artefact `10609698687` was verified against SHA-256 `7e1fbd13df26ecfba20a9ca4f407a1d4d5a283813bd2355f0e7ecea574a9b0ae`. The actual WebGL hero, mobile composition and source editor screenshots were inspected.
+**Hosted conversions are not active yet.** Railway is not connected, so no persistent worker or volume has been provisioned. The live gateway correctly reports `worker: unconfigured`, `storage: not-connected`, `canConvert: false`. It rejects conversion submissions rather than accepting jobs into temporary Vercel storage. The remaining deployment step is to connect Railway, provision the worker/volume, verify its sandboxed readiness, and configure `FRAMEPORT_WORKER_ORIGIN` on Vercel.
 
-## What changed
+## Implemented platform
 
-`web/presentation.css` gives headings, navigation and controls actual semibold weight 600; body, editable text and source code use medium weight 500. Code is at least 12px in the tested layouts. The interface remains black with white/grey text and restrained borders. Mobile headline sizing preserves three lines rather than spilling into five. System font faces vary by operating system; no font binaries or artificial text strokes are included.
+Dedicated document routes for conversion, projects, review, content, source, verification, exports, settings, login and documentation. Direct links, refresh and browser back/forward restore the selected project/source view. Project search/filtering, rename and deletion use the actual API. The approved pure-black design, heavier typography and live monochrome WebGL shader remain intact.
 
-The shader was already present, but its earlier rendering was too small and faint. `web/src/eclipse.ts` now renders a wider elliptical silhouette, a stronger silver shoulder and a curved, one-sided folded surface. The hero artwork extends beyond the right viewport edge while copy remains aligned and readable. Narrow tablet and mobile layouts place the artwork below the copy.
+Private sign-in uses an opaque HTTP-only session, stored as a hash on the persistent service. Sessions survive restarts, expire, and are revoked on logout or access-key rotation. The gateway forwards only the current visitor's credentials and does not share upstream cookies between visitors. A failing-before-fix unit regression and independent browser-context checks verify that boundary.
 
-This is original native WebGL, not a background image, external texture or embedded Framer template. Pause, reduced motion, offscreen suspension, bounded resolution, disposal and context recovery remain implemented. WebGL-unavailable devices display the explicitly labelled static CSS fallback. The portable preview now includes the new presentation stylesheet and the compiled shader.
+Projects, revision summaries and queue entries are stored on the worker's durable disk. Each conversion runs in a supervised subprocess. Cancellation and timeouts terminate its process group. Queue claims and revision-checked edits are transactional, accidental duplicate submissions are idempotent, and interrupted work is retried once. Five-minute download links are bound to a completed project revision and export format.
 
-## Measured results for this code
+This is one authenticated owner workspace, not public signup, billing or multi-tenant isolation. Separate processes are operational isolation, not a substitute for hardened per-tenant containers or network-level egress enforcement.
 
-The successful CI run passed 78 unit/API cases, 46 existing design/shader checks, 77 additional typography/presentation checks, 10 HTML comparisons, 17 HTML render/disclosure checks, a clean generated React production build, 10 independently built React comparisons and 44 real-browser editing/download acceptance checks. The design, presentation and acceptance reports contain no uncaught browser errors.
+## Verified code and evidence
 
-The shader tests confirm that actual rendered pixels change while running, stop when paused/offscreen, remain monochrome, and recover after context loss. Typography tests cover the actual HTTP app at 1440, 768, 390 and 320px. A source-font assertion was changed to await settled CSS because asynchronous source loading can replace the selected DOM element. The weight requirement was not lowered. A separate local portable-preview test passed 20 screen/viewport checks; that local test uses CSS fallback, not WebGL or HTTP evidence.
+[GitHub Actions run 35531590101](https://github.com/EmotiveImpact/frameport/actions/runs/35531590101), check job `106133040098`, passed for commit `8418f820c78bfa600ee73d516678145cd342c2b9`. The compiled studio synchronisation job also passed; compiled source is committed on main. Any subsequent documentation-only update does not change the tested application code.
 
-## Preserved scope and limits
+Measured results: **125 Python tests, 17 router tests, 40 new platform checks, 44 retained browser acceptance checks, 46 shader/design checks, 77 typography/presentation checks, 10 HTML comparisons, 17 HTML render/disclosure checks and 10 built-React comparisons passed.** The generated React installation/production build passed. The dependency audit reported zero vulnerabilities at that run. The platform report recorded no uncaught browser errors.
 
-The capture engine, compiler, authentication, network policy and sandboxed export preview were not changed. Content editing, revision invalidation and React/HTML downloads remain tested on the original Forma fixture.
+The new platform test starts an actual HTTP gateway and persistent service with an empty workspace. It signs in, refreshes, queues and completes the original Forma conversion in a subprocess, reopens source deep links, renames the project, saves edits, rejects a stale revision, downloads both archives and verifies persistence after the services stop. No offline document adapter or pre-completed project is substituted.
 
-CI uses authored fixtures and software WebGL. A genuine Framer-published source, the editor plugin, Docker, production tenant/browser isolation, arbitrary advanced Framer behaviours and every physical GPU/browser remain outside demonstrated coverage. Per-conversion reports do not automatically verify React builds. No public hosted service was deployed in this update.
+Downloaded artefact `10611139479` was verified against SHA-256 `7d0fcc7a3c658d12400bae2888afb3de69d3d6649d51f0ecaa44bb1259c5a92b`. Its project-library, review, export and mobile screenshots were inspected. Full provenance is in `docs/evidence/platform-ci.json`.
 
-Run `git pull --ff-only` in the repository, restart the local worker and reload the app. See `docs/PRESENTATION.md` and `docs/MONOCHROME.md` for implementation details.
+## Remaining verification
+
+The successful browser tests run the original authored Forma fixture in CI, not an operational Railway deployment or a genuinely Framer-published source. Provider sandbox support, hosted end-to-end conversion, backup/restore, Framer editor integration and advanced Framer behaviour coverage remain separate acceptance gates. Per-conversion reports do not automatically verify every generated React build.
+
+See `docs/PLATFORM.md` for configuration, security boundaries and the exact remaining deployment steps. Local use remains available through `bash scripts/start.sh`.

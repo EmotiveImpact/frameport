@@ -1,0 +1,47 @@
+{
+  "date": "2026-09-20",
+  "testedCommit": "8418f820c78bfa600ee73d516678145cd342c2b9",
+  "testedTree": "82a3e1116247f34a4774cc76c3f69e45ca947be0",
+  "repository": "EmotiveImpact/frameport",
+  "workflowRun": 35531590101,
+  "workflowJob": 106133040098,
+  "workflowConclusion": "success",
+  "artifactId": 10611139479,
+  "artifactSha256": "7d0fcc7a3c658d12400bae2888afb3de69d3d6649d51f0ecaa44bb1259c5a92b",
+  "scope": "Real HTTP gateway, cookie session, durable queue and subprocess conversion of authored Forma fixture",
+  "pythonTests": 125,
+  "routerTests": 17,
+  "platformChecks": 40,
+  "browserAcceptanceChecks": 44,
+  "designChecks": 46,
+  "presentationChecks": 77,
+  "htmlComparisons": 10,
+  "htmlChecks": 17,
+  "reactComparisons": 10,
+  "generatedReactBuild": "passed",
+  "auditVulnerabilities": {
+    "info": 0,
+    "low": 0,
+    "moderate": 0,
+    "high": 0,
+    "critical": 0,
+    "total": 0
+  },
+  "platformErrors": [],
+  "platformPassed": true,
+  "vercel": {
+    "url": "https://frameport.vercel.app",
+    "deploymentId": "dpl_AUEjpEKj88c34VUU5KgY1DkFJqip",
+    "testedCodeDeployment": "READY",
+    "gatewayHealth": "worker-unconfigured",
+    "canConvert": false
+  },
+  "remainingDeployment": "Railway account connection and persistent worker/volume provisioning, then Vercel FRAMEPORT_WORKER_ORIGIN configuration.",
+  "unverified": [
+    "Hosted worker",
+    "Provider Chromium sandbox support",
+    "Backup and restore",
+    "Genuine Framer-published source compatibility",
+    "Public multi-tenant operation"
+  ]
+}
