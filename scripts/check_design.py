@@ -67,6 +67,7 @@ async def run(output: Path, software_gl: bool, portable: Path | None = None):
                     paused_frames = await page.locator("#hero-shader").get_attribute("data-frames")
                     await page.wait_for_timeout(350)
                     check("Pause stops the animation loop", paused_frames == await page.locator("#hero-shader").get_attribute("data-frames"))
+                    check("Hero cannot scroll its heading behind the clipping edge", await page.locator('.welcome').evaluate("e => e.scrollLeft === 0 && e.querySelector('.hero-copy').getBoundingClientRect().left >= e.getBoundingClientRect().left - 1"))
                     await page.screenshot(path=str(output / "desktop-home.png"), full_page=True)
                     await page.locator("#motion-toggle").click()
                     await page.evaluate("window.scrollTo(0, document.documentElement.scrollHeight)")
